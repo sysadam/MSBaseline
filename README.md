@@ -1,5 +1,5 @@
 # MSBaseline
- Module to create Microsoft 365 baselines
+Creates recommended baselines for Microsoft 365. The module is very barebones for now.
 
 # Reference 
 I am creating functions to add to this module refering Alex's work. 
