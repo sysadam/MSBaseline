@@ -1,56 +1,15 @@
-
-#################################################
-## ENABLE UNIFIED AUDIT LOG SEARCH
-# https://docs.microsoft.com/en-us/microsoft-365/compliance/search-the-audit-log-in-security-and-compliance?view=o365-worldwide
-#################################################
-
-function Set-AdminAuditLogConfigBaseline {
-    <#
-    .SYNOPSIS
-    This will turn on the audit log inside the complaince center. 
-
-    https://docs.microsoft.com/en-us/microsoft-365/compliance/search-the-audit-log-in-security-and-compliance?view=o365-worldwide
-
-    Connect to Exchange Online via PowerShell using MFA:
-    https://docs.microsoft.com/en-us/powershell/exchange/exchange-online/connect-to-exchange-online-powershell/mfa-connect-to-exchange-online-powershell?view=exchange-ps1
-
-    .NOTES
-        Author:   Adam Gell
-        GitHub:   https://github.com/AdamNSTA/Microsoft-Baselines/   
-
-    .EXAMPLE
-        Set-AdminAuditLogConfigBaseline
-        
-    #>
+function Set-ModernAuthenticationBaseline {
     try {
-        Set-AdminAuditLogConfig -UnifiedAuditLogIngestionEnabled $true
-        Get-Mailbox -ResultSize Unlimited | Set-Mailbox -AuditEnabled $true
-        Write-Host -ForegroundColor Yello "Unified Audit Log Search is now enabled with mailbox auditing enabled" 
+        Write-Host -ForegroundColor Yello "Modern Authentication for Exchange Online is stronly recommended."
+        Set-OrganizationConfig -OAuth2ClientProfileEnabled $true
+        Write-Host -ForegroundColor Yello "Modern Authentication is now enabled"
     }
     catch {
         Write-Host -ForegroundColor Yellow "Make your have are connected to Exchange Online"
         $_
     }
-    
 }
 
-
-#################################################
-## CHECK TO ENSURE MODERN AUTH IS ENABLED
-#################################################
-$OrgConfig = Get-OrganizationConfig 
-if ($OrgConfig.OAuth2ClientProfileEnabled) {
-    Write-Host 
-    Write-Host -ForegroundColor $MessageColor "Modern Authentication for Exchange Online is already enabled"
-} else {
-   Write-Host
-   Write-Host -ForegroundColor $AssessmentColor "Modern Authentication for Exchange online is not enabled, enabling"
-   Write-Host 
-   Set-OrganizationConfig -OAuth2ClientProfileEnabled $true
-   Write-Host 
-   Write-Host -ForegroundColor $MessageColor "Modern Authentication is now enabled"
-
-}
 
 #################################################
 ## BLOCK BASIC AUTH

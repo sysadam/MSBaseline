@@ -115,6 +115,18 @@ function Set-AdminAuditLogConfigBaseline {
     
 }
 
+function Set-ModernAuthenticationBaseline {
+    try {
+        Write-Host -ForegroundColor Yello "Modern Authentication for Exchange Online is stronly recommended."
+        Set-OrganizationConfig -OAuth2ClientProfileEnabled $true
+        Write-Host -ForegroundColor Yello "Modern Authentication is now enabled"
+    }
+    catch {
+        Write-Host -ForegroundColor Yellow "Make your have are connected to Exchange Online"
+        $_
+    }
+}
+
 
 #Testing
 #Connect-ExchangeOnline
