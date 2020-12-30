@@ -39,8 +39,10 @@ If your tenant has less than 60 users, you can set the flag to include all users
 ```
 Set-DefaultBaseline365ATP -ProtectAllUsers $True
 ```
-
+### EXAMPLE 2
+```
 Set-DefaultBaseline365ATP -ProtectAllUsers $False
+```
 
 ## PARAMETERS
 
