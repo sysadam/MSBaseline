@@ -83,6 +83,3 @@
 #Testing
 #Connect-ExchangeOnline
 #Connect-MsolService
-
-
-#Set-DefaultBaseline365ATP

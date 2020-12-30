@@ -98,10 +98,10 @@ PrivateData = @{
         Tags = @("Security", "AzureAD", "Microsoft 365", "Baseline")
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/AdamNSTA/MSBaseline/blob/main/LICENSE'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/AdamNSTA/MSBaseline'
 
         # A URL to an icon representing this module.
         # IconUri = ''
@@ -116,7 +116,7 @@ PrivateData = @{
         # RequireLicenseAcceptance = $false
 
         # External dependent modules of this module
-        # ExternalModuleDependencies = @()
+        ExternalModuleDependencies = @("ExchangeOnlineManagement", "MSOnline")
 
     } # End of PSData hashtable
 
