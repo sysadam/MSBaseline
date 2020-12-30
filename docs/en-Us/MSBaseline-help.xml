@@ -944,7 +944,14 @@
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>Set-DefaultBaseline365ATP -ProtectAllUsers $True</dev:code>
         <dev:remarks>
-          <maml:para>Set-DefaultBaseline365ATP -ProtectAllUsers $False</maml:para>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Set-DefaultBaseline365ATP -ProtectAllUsers $False</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
