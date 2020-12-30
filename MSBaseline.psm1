@@ -116,6 +116,19 @@ function Set-AdminAuditLogConfigBaseline {
 }
 
 function Set-ModernAuthenticationBaseline {
+    <#
+    .SYNOPSIS
+    Modern authentication in Exchange Online enables authentication features like multi-factor authentication (MFA), smart cards, certificate-based authentication (CBA), and third-party SAML identity providers.
+    https://docs.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/enable-or-disable-modern-authentication-in-exchange-online
+    Connect to Exchange Online via PowerShell using MFA:
+    https://docs.microsoft.com/en-us/powershell/exchange/exchange-online/connect-to-exchange-online-powershell/mfa-connect-to-exchange-online-powershell?view=exchange-ps1
+    .NOTES
+        Author:   Adam Gell
+        GitHub:   https://github.com/AdamNSTA/Microsoft-Baselines/   
+    .EXAMPLE
+        Set-ModernAuthenticationBaseline
+        
+    #>
     try {
         Write-Host -ForegroundColor Yello "Modern Authentication for Exchange Online is stronly recommended."
         Set-OrganizationConfig -OAuth2ClientProfileEnabled $true
