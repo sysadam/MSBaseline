@@ -1,7 +1,7 @@
 ---
 external help file: MSBaseline-help.xml
 Module Name: MSBaseline
-online version:
+online version: https://github.com/AdamNSTA/MSBaseline/blob/dev/docs/Set-DefaultBaseline365ATP.md
 schema: 2.0.0
 ---
 

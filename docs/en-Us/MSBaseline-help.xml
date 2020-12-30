@@ -11,15 +11,31 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>{{ Fill in the Description }}</maml:para>
+      <maml:para>Configures a basic default AntiMalware/Antiphish policy</maml:para>
+      <maml:para>If your tenant has less than 60 users, you can set the flag to include all users in the impersonation protection.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Set-DefaultBaseline365ATP</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>Identity</maml:name>
+          <maml:Description>
+            <maml:para>The Identity parameter specifies the antiphish policy that you want to modify. You can use any value that uniquely identifies the policy. For example:</maml:para>
+            <maml:para>- Name</maml:para>
+            <maml:para>- Distinguished name (DN)</maml:para>
+            <maml:para>- GUID</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">AntiPhishPolicyIdParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>AntiPhishPolicyIdParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>ProtectAllUsers</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill ProtectAllUsers Description }}</maml:para>
+            <maml:para>Set this to true if you want to query Azure Ad for all users and add them to the impersonation policy.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
@@ -28,173 +44,432 @@
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
-          <maml:name>EnableMailboxIntelligenceProtection</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>AdminDisplayName</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill EnableMailboxIntelligenceProtection Description }}</maml:para>
+            <maml:para>The AdminDisplayName parameter specifies a description for the policy. If the value contains spaces, enclose the value in quotation marks (").</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
-            <maml:name>Object</maml:name>
+            <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>True</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
-          <maml:name>MailboxIntelligenceProtectionAction</maml:name>
-          <maml:Description>
-            <maml:para>{{ Fill MailboxIntelligenceProtectionAction Description }}</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>MoveToJmf</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
-          <maml:name>EnableUnauthenticatedSender</maml:name>
-          <maml:Description>
-            <maml:para>Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder. $EnableAntispoofEnforcement = $true,</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>True</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>AuthenticationFailAction</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill AuthenticationFailAction Description }}</maml:para>
+            <maml:para>This setting is part of spoof protection.</maml:para>
+            <maml:para>The AuthenticationFailAction parameter specifies the action to take when the message fails composite authentication (a mixture of traditional SPF, DKIM, and DMARC email authentication checks and proprietary backend intelligence). Valid values are:</maml:para>
+            <maml:para>- MoveToJmf: This is the default value. Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder. The message is only moved if the junk email rule is enabled on the mailbox (it's enabled by default). For more information, see Configure junk email settings on Exchange Online mailboxes (https://docs.microsoft.com/microsoft-365/security/office-365-security/configure-junk-email-settings-on-exo-mailboxes). - Quarantine: Move the message to quarantine. Quarantined high confidence phishing messages are only available to admins. As of April 2020, quarantined phishing messages are available to the intended recipients.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">SpoofAuthenticationFailAction</command:parameterValue>
           <dev:type>
-            <maml:name>Object</maml:name>
+            <maml:name>SpoofAuthenticationFailAction</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>MoveToJmf</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="14" aliases="none">
-          <maml:name>PhishThresholdLevel</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
           <maml:Description>
-            <maml:para>Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder.</maml:para>
+            <maml:para>The Confirm switch specifies whether to show or hide the confirmation prompt. How this switch affects the cmdlet depends on if the cmdlet requires confirmation before proceeding.</maml:para>
+            <maml:para>- Destructive cmdlets (for example, Remove-* cmdlets) have a built-in pause that forces you to acknowledge the command before proceeding. For these cmdlets, you can skip the confirmation prompt by using this exact syntax: `-Confirm:$false`.</maml:para>
+            <maml:para>- Most other cmdlets (for example, New-\ and Set-\ cmdlets) don't have a built-in pause. For these cmdlets, specifying the Confirm switch without a value introduces a pause that forces you acknowledge the command before proceeding.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
-            <maml:name>Object</maml:name>
+            <maml:name>SwitchParameter</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>2</dev:defaultValue>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="15" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>EnableAntispoofEnforcement</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of spoof protection.</maml:para>
+            <maml:para>The EnableAntispoofEnforcement parameter specifies whether to enable or disable antispoofing protection for the policy. Valid values are:</maml:para>
+            <maml:para>- $true: Antispoofing is enabled for the policy. This is the default and recommended value. You specify the spoofed senders to allow or block using the Set-PhishFilterPolicy cmdlet.</maml:para>
+            <maml:para>- $false: Antispoofing is disabled for the policy. We only recommend this value if you have a domain that's protected by another email filtering service.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="named" aliases="none">
           <maml:name>Enabled</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill Enabled Description }}</maml:para>
+            <maml:para>The Enabled parameter specifies whether the antiphish policy is enabled or disabled. Valid values are:</maml:para>
+            <maml:para>$true: The policy is enabled.</maml:para>
+            <maml:para>$false: The policy is disabled.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
-            <maml:name>Object</maml:name>
+            <maml:name>Boolean</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>True</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
-          <maml:name>TargetedUserProtectionAction</maml:name>
-          <maml:Description>
-            <maml:para>set this to true if you want to query Azure Ad for all users and add them to the impersonation policy.</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>Quarantine</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-          <maml:name>EnableOrganizationDomainsProtection</maml:name>
-          <maml:Description>
-            <maml:para>Move the message to quarantine. Quarantined high confidence phishing messages are only available to admins. As of April 2020, quarantined phishing messages are available to the intended recipients.</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>True</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
-          <maml:name>EnableTargetedDomainsProtection</maml:name>
-          <maml:Description>
-            <maml:para>{{ Fill EnableTargetedDomainsProtection Description }}</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>True</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-          <maml:name>TargetedDomainProtectionAction</maml:name>
-          <maml:Description>
-            <maml:para>{{ Fill TargetedDomainProtectionAction Description }}</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>MoveToJmf</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-          <maml:name>EnableSimilarUsersSafetyTips</maml:name>
-          <maml:Description>
-            <maml:para>{{ Fill EnableSimilarUsersSafetyTips Description }}</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>True</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
-          <maml:name>EnableSimilarDomainsSafetyTips</maml:name>
-          <maml:Description>
-            <maml:para>{{ Fill EnableSimilarDomainsSafetyTips Description }}</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>True</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
-          <maml:name>EnableUnusualCharactersSafetyTips</maml:name>
-          <maml:Description>
-            <maml:para>{{ Fill EnableUnusualCharactersSafetyTips Description }}</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>True</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>EnableMailboxIntelligence</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill EnableMailboxIntelligence Description }}</maml:para>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The EnableMailboxIntelligence parameter specifies whether to enable or disable mailbox intelligence (artificial intelligence that determines user email patterns with their frequent contacts). Valid values are::</maml:para>
+            <maml:para>- $true: Mailbox intelligence is enabled. This is the default value.</maml:para>
+            <maml:para>- $false: Mailbox intelligence is disabled.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
-            <maml:name>Object</maml:name>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>EnableMailboxIntelligenceProtection</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The EnableMailboxIntelligenceProtection specifies whether to enable or disable enhanced impersonation results based on each user's individual sender map. This intelligence allows Microsoft 365 to customize user impersonation detection and better handle false positives. Valid values are:</maml:para>
+            <maml:para>- $true: Enable mailbox intelligence based impersonation protection.</maml:para>
+            <maml:para>- $false: Don't enable mailbox intelligence based impersonation protection. This is the default value.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>EnableOrganizationDomainsProtection</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The EnableOrganizationDomainsProtection parameter specifies whether to enable domain impersonation protection for all registered domains in the Microsoft 365 organization. Valid values are:</maml:para>
+            <maml:para>- $true: Domain impersonation protection is enabled for all registered domains in the Microsoft 365 organization.</maml:para>
+            <maml:para>- $false: Domain impersonation protection isn't enabled for all registered domains in the Microsoft 365 organization. This is the default value. You can enable protection for specific domains by using the EnableTargetedDomainsProtection and TargetedDomainsToProtect parameters.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>EnableSimilarDomainsSafetyTips</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The EnableSimilarDomainsSafetyTips parameter specifies whether to enable the safety tip that's shown to recipients for domain impersonation detections. Valid values are:</maml:para>
+            <maml:para>- $true: Safety tips for similar domains are enabled.</maml:para>
+            <maml:para>- $false: Safety tips for similar domains are disabled. This is the default value.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>EnableSimilarUsersSafetyTips</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The EnableSimilarUsersSafetyTips parameter specifies whether to enable the safety tip that's shown to recipients for user impersonation detections. Valid values are:</maml:para>
+            <maml:para>- $true: Safety tips for similar users are enabled.</maml:para>
+            <maml:para>- $false: Safety tips for similar users are disabled. This is the default value.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>EnableTargetedDomainsProtection</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The EnableTargetedDomainsProtection parameter specifies whether to enable domain impersonation protection for a list of specified domains. Valid values are:</maml:para>
+            <maml:para>- $true: Domain impersonation protection is enabled for the domains specified by the TargetedDomainsToProtect parameter.</maml:para>
+            <maml:para>- $false: The TargetedDomainsToProtect parameter isn't used. This is the default value.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>EnableTargetedUserProtection</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The EnableTargetedUserProtection parameter specifies whether to enable user impersonation protection for a list of specified users. Valid values are:</maml:para>
+            <maml:para>- $true: User impersonation protection is enabled for the users specified by the TargetedUsersToProtect parameter.</maml:para>
+            <maml:para>- $false: The TargetedUsersToProtect parameter isn't used. This is the default value.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>EnableUnauthenticatedSender</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of spoof protection.</maml:para>
+            <maml:para>The EnableUnauthenticatedSender parameter enables or disables unauthenticated sender identification in Outlook. Valid values are:</maml:para>
+            <maml:para>- $true: This is the default value. A question mark (?) is applied to the sender's photo if the message does not pass SPF or DKIM checks AND the message does not pass DMARC or composite authentication. The via tag (chris@contoso.com &lt;u&gt;via&lt;/u&gt; michelle@fabrikam.com) is added if the domain in the From address (the message sender that's displayed in email clients) is different from the domain in the DKIM signature or the MAIL FROM address.</maml:para>
+            <maml:para>- $false: A question mark is never applied to the sender's photo. The via tag is still added if the domain in the From address is different from the domain in the DKIM signature or the MAIL FROM address.</maml:para>
+            <maml:para></maml:para>
+            <maml:para>To prevent these identifiers from being added to messages from specific senders, you have the following options:</maml:para>
+            <maml:para>- Allow the sender to spoof in the spoof intelligence policy. This action will prevent the via tag from appearing in messages from the sender when unauthenticated sender identification is disabled. For instructions, see Configure spoof intelligence in Microsoft 365 (https://docs.microsoft.com/microsoft-365/security/office-365-security/learn-about-spoof-intelligence). - If you own the sender's domain, configure email authentication for the domain. For more information, see Configure email authentication for domains you own (https://docs.microsoft.com/microsoft-365/security/office-365-security/email-validation-and-authentication#configure-email-authentication-for-domains-you-own).</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>True</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>EnableUnusualCharactersSafetyTips</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The EnableUnusualCharactersSafetyTips parameter specifies whether to enable the safety tip that's shown to recipients for unusual characters in domain and user impersonation detections. Valid values are:</maml:para>
+            <maml:para>- $true: Safety tips for unusual characters are enabled.</maml:para>
+            <maml:para>- $false: Safety tips for unusual characters are disabled. This is the default value.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ExcludedDomains</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The ExcludedDomains parameter specifies an exception for impersonation protection that looks for the specified domains in the message sender. You can specify multiple domains separated by commas.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+          <dev:type>
+            <maml:name>MultiValuedProperty</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ExcludedSenders</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The ExcludedSenders parameter specifies an exception for impersonation protection that looks for the specified message sender. You can specify multiple email addresses separated by commas.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+          <dev:type>
+            <maml:name>MultiValuedProperty</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ImpersonationProtectionState</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The ImpersonationProtectionState parameter specifies the configuration of impersonation protection. Valid values are:</maml:para>
+            <maml:para>- Automatic: This is the default value in the default policy named Office365 AntiPhish Policy.</maml:para>
+            <maml:para>- Manual: This is the default value in custom policies that you create.</maml:para>
+            <maml:para>- Off</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">ImpersonationProtectionState</command:parameterValue>
+          <dev:type>
+            <maml:name>ImpersonationProtectionState</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>MailboxIntelligenceProtectionAction</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The MailboxIntelligenceProtectionAction parameter specifies what to do with messages that fail mailbox intelligence protection. Valid values are:</maml:para>
+            <maml:para>- NoAction: This is the default value.</maml:para>
+            <maml:para>- BccMessage: Add the recipients specified by the MailboxIntelligenceProtectionActionRecipients parameter to the Bcc field of the message.</maml:para>
+            <maml:para>- Delete: Delete the message during filtering. Use caution when selecting this value, because you can't recover the deleted message.</maml:para>
+            <maml:para>- MoveToJmf: Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder. The message is only moved if the junk email rule is enabled on the mailbox (it's enabled by default). For more information, see Configure junk email settings on Exchange Online mailboxes (https://docs.microsoft.com/microsoft-365/security/office-365-security/configure-junk-email-settings-on-exo-mailboxes). - Quarantine: Move the message to quarantine. Quarantined high confidence phishing messages are only available to admins. As of April 2020, quarantined phishing messages are available to the intended recipients.</maml:para>
+            <maml:para>- Redirect: Redirect the message to the recipients specified by the MailboxIntelligenceProtectionActionRecipients parameter.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">ImpersonationAction</command:parameterValue>
+          <dev:type>
+            <maml:name>ImpersonationAction</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>MailboxIntelligenceProtectionActionRecipients</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The MailboxIntelligenceProtectionActionRecipients parameter specifies the recipients to add to detected messages when the MailboxIntelligenceProtectionAction parameter is set to the value Redirect or BccMessage.</maml:para>
+            <maml:para>A valid value for this parameter is an email address. You can specify multiple email addresses separated by commas.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+          <dev:type>
+            <maml:name>MultiValuedProperty</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>MakeDefault</maml:name>
+          <maml:Description>
+            <maml:para>The MakeDefault switch makes the specified antiphish policy the default antiphish policy. You don't have to specify a value with this switch.</maml:para>
+            <maml:para>The default antiphish policy is applied to everyone (no corresponding antiphish rule), can't be renamed, and has the unmodifiable priority value Lowest (the default policy is always applied last).</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>PhishThresholdLevel</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of advanced settings and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The PhishThresholdLevel parameter specifies the tolerance level that's used by machine learning in the handling of phishing messages. Valid values are:</maml:para>
+            <maml:para>- 1: Standard: This is the default value. The severity of the action that's taken on the message depends on the degree of confidence that the message is phishing (low, medium, high, or very high confidence). For example, messages that are identified as phishing with a very high degree of confidence have the most severe actions applied, while messages that are identified as phishing with a low degree of confidence have less severe actions applied.</maml:para>
+            <maml:para>- 2: Aggressive: Messages that are identified as phishing with a high degree of confidence are treated as if they were identified with a very high degree of confidence.</maml:para>
+            <maml:para>- 3: More aggressive: Messages that are identified as phishing with a medium or high degree of confidence are treated as if they were identified with a very high degree of confidence.</maml:para>
+            <maml:para>- 4: Most aggressive: Messages that are identified as phishing with a low, medium, or high degree of confidence are treated as if they were identified with a very high degree of confidence.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>PolicyTag</maml:name>
+          <maml:Description>
+            <maml:para>This parameter is reserved for internal Microsoft use.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetedDomainActionRecipients</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The TargetedDomainActionRecipients parameter specifies the recipients to add to detected domain impersonation messages when the TargetedDomainProtectionAction parameter is set to the value Redirect or BccMessage.</maml:para>
+            <maml:para>A valid value for this parameter is an email address. You can specify multiple email addresses separated by commas.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+          <dev:type>
+            <maml:name>MultiValuedProperty</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetedDomainProtectionAction</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The TargetedDomainProtectionAction parameter specifies the action to take on detected domain impersonation messages. You specify the protected domains in the TargetedDomainsToProtect parameter. Valid values are:</maml:para>
+            <maml:para>- NoAction: This is the default value.</maml:para>
+            <maml:para>- BccMessage: Add the recipients specified by the TargetedDomainActionRecipients parameter to the Bcc field of the message.</maml:para>
+            <maml:para>- Delete: Delete the message during filtering. Use caution when selecting this value, because you can't recover the deleted message.</maml:para>
+            <maml:para>- MoveToJmf: Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder. The message is only moved if the junk email rule is enabled on the mailbox (it's enabled by default). For more information, see Configure junk email settings on Exchange Online mailboxes (https://docs.microsoft.com/microsoft-365/security/office-365-security/configure-junk-email-settings-on-exo-mailboxes). - Quarantine: Move the message to quarantine. Quarantined high confidence phishing messages are only available to admins. As of April 2020, quarantined phishing messages are available to the intended recipients.</maml:para>
+            <maml:para>- Redirect: Redirect the message to the recipients specified by the TargetedDomainActionRecipients parameter.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+          <dev:type>
+            <maml:name>MultiValuedProperty</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetedDomainsToProtect</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The TargetedDomainsToProtect parameter specifies the domains that are included in domain impersonation protection when the EnableTargetedDomainsProtection parameter is set to $true.</maml:para>
+            <maml:para>You can specify multiple domains separated by commas.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+          <dev:type>
+            <maml:name>MultiValuedProperty</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetedUserActionRecipients</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The TargetedUserActionRecipients parameter specifies the replacement or additional recipients for detected user impersonation messages when the TargetedUserProtectionAction parameter is set to the value Redirect or BccMessage.</maml:para>
+            <maml:para>A valid value for this parameter is an email address. You can specify multiple email addresses separated by commas.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+          <dev:type>
+            <maml:name>MultiValuedProperty</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetedUserProtectionAction</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The TargetedUserProtectionAction parameter specifies the action to take on detected user impersonation messages. You specify the protected users in the TargetedUsersToProtect parameter. Valid values are:</maml:para>
+            <maml:para>- NoAction: This is the default value.</maml:para>
+            <maml:para>- BccMessage: Add the recipients specified by the TargetedDomainActionRecipients parameter to the Bcc field of the message.</maml:para>
+            <maml:para>- Delete: Delete the message during filtering. Use caution when selecting this value, because you can't recover the deleted message.</maml:para>
+            <maml:para>- MoveToJmf: Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder. The message is only moved if the junk email rule is enabled on the mailbox (it's enabled by default). For more information, see Configure junk email settings on Exchange Online mailboxes (https://docs.microsoft.com/microsoft-365/security/office-365-security/configure-junk-email-settings-on-exo-mailboxes). - Quarantine: Move the message to quarantine. Quarantined high confidence phishing messages are only available to admins. As of April 2020, quarantined phishing messages are available to the intended recipients.</maml:para>
+            <maml:para>- Redirect: Redirect the message to the recipients specified by the TargetedDomainActionRecipients parameter.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+          <dev:type>
+            <maml:name>MultiValuedProperty</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetedUsersToProtect</maml:name>
+          <maml:Description>
+            <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+            <maml:para>The TargetedUsersToProtect parameter specifies the users that are included in user impersonation protection when the EnableTargetedUserProtection parameter is set to $true.</maml:para>
+            <maml:para>This parameter uses the syntax: "DisplayName;EmailAddress".</maml:para>
+            <maml:para>- DisplayName specifies the display name of the user that could be a target of impersonation. This value can contain special characters.</maml:para>
+            <maml:para>- EmailAddress specifies the internal or external email address that's associated with the display name.</maml:para>
+            <maml:para>- You can specify multiple values by using the syntax: "DisplayName1;EmailAddress1","DisplayName2;EmailAddress2",..."DisplayNameN;EmailAddressN". The combination of DisplayName and EmailAddress needs to be unique for each value.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+          <dev:type>
+            <maml:name>MultiValuedProperty</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:Description>
+            <maml:para>The WhatIf switch simulates the actions of the command. You can use this switch to view the changes that would occur without actually applying those changes. You don't need to specify a value with this switch.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
@@ -202,7 +477,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>ProtectAllUsers</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill ProtectAllUsers Description }}</maml:para>
+          <maml:para>Set this to true if you want to query Azure Ad for all users and add them to the impersonation policy.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
@@ -211,173 +486,450 @@
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
-        <maml:name>TargetedUserProtectionAction</maml:name>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>Identity</maml:name>
         <maml:Description>
-          <maml:para>set this to true if you want to query Azure Ad for all users and add them to the impersonation policy.</maml:para>
+          <maml:para>The Identity parameter specifies the antiphish policy that you want to modify. You can use any value that uniquely identifies the policy. For example:</maml:para>
+          <maml:para>- Name</maml:para>
+          <maml:para>- Distinguished name (DN)</maml:para>
+          <maml:para>- GUID</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">AntiPhishPolicyIdParameter</command:parameterValue>
         <dev:type>
-          <maml:name>Object</maml:name>
+          <maml:name>AntiPhishPolicyIdParameter</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>Quarantine</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-        <maml:name>EnableOrganizationDomainsProtection</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>AdminDisplayName</maml:name>
         <maml:Description>
-          <maml:para>Move the message to quarantine. Quarantined high confidence phishing messages are only available to admins. As of April 2020, quarantined phishing messages are available to the intended recipients.</maml:para>
+          <maml:para>The AdminDisplayName parameter specifies a description for the policy. If the value contains spaces, enclose the value in quotation marks (").</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
-          <maml:name>Object</maml:name>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>True</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
-        <maml:name>EnableTargetedDomainsProtection</maml:name>
-        <maml:Description>
-          <maml:para>{{ Fill EnableTargetedDomainsProtection Description }}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>True</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-        <maml:name>TargetedDomainProtectionAction</maml:name>
-        <maml:Description>
-          <maml:para>{{ Fill TargetedDomainProtectionAction Description }}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>MoveToJmf</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-        <maml:name>EnableSimilarUsersSafetyTips</maml:name>
-        <maml:Description>
-          <maml:para>{{ Fill EnableSimilarUsersSafetyTips Description }}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>True</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
-        <maml:name>EnableSimilarDomainsSafetyTips</maml:name>
-        <maml:Description>
-          <maml:para>{{ Fill EnableSimilarDomainsSafetyTips Description }}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>True</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
-        <maml:name>EnableUnusualCharactersSafetyTips</maml:name>
-        <maml:Description>
-          <maml:para>{{ Fill EnableUnusualCharactersSafetyTips Description }}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>True</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
-        <maml:name>EnableMailboxIntelligence</maml:name>
-        <maml:Description>
-          <maml:para>{{ Fill EnableMailboxIntelligence Description }}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>True</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
-        <maml:name>EnableMailboxIntelligenceProtection</maml:name>
-        <maml:Description>
-          <maml:para>{{ Fill EnableMailboxIntelligenceProtection Description }}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>True</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
-        <maml:name>MailboxIntelligenceProtectionAction</maml:name>
-        <maml:Description>
-          <maml:para>{{ Fill MailboxIntelligenceProtectionAction Description }}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>MoveToJmf</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
-        <maml:name>EnableUnauthenticatedSender</maml:name>
-        <maml:Description>
-          <maml:para>Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder. $EnableAntispoofEnforcement = $true,</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>True</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>AuthenticationFailAction</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill AuthenticationFailAction Description }}</maml:para>
+          <maml:para>This setting is part of spoof protection.</maml:para>
+          <maml:para>The AuthenticationFailAction parameter specifies the action to take when the message fails composite authentication (a mixture of traditional SPF, DKIM, and DMARC email authentication checks and proprietary backend intelligence). Valid values are:</maml:para>
+          <maml:para>- MoveToJmf: This is the default value. Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder. The message is only moved if the junk email rule is enabled on the mailbox (it's enabled by default). For more information, see Configure junk email settings on Exchange Online mailboxes (https://docs.microsoft.com/microsoft-365/security/office-365-security/configure-junk-email-settings-on-exo-mailboxes). - Quarantine: Move the message to quarantine. Quarantined high confidence phishing messages are only available to admins. As of April 2020, quarantined phishing messages are available to the intended recipients.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">SpoofAuthenticationFailAction</command:parameterValue>
         <dev:type>
-          <maml:name>Object</maml:name>
+          <maml:name>SpoofAuthenticationFailAction</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>MoveToJmf</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="14" aliases="none">
-        <maml:name>PhishThresholdLevel</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+        <maml:name>Confirm</maml:name>
         <maml:Description>
-          <maml:para>Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder.</maml:para>
+          <maml:para>The Confirm switch specifies whether to show or hide the confirmation prompt. How this switch affects the cmdlet depends on if the cmdlet requires confirmation before proceeding.</maml:para>
+          <maml:para>- Destructive cmdlets (for example, Remove-* cmdlets) have a built-in pause that forces you to acknowledge the command before proceeding. For these cmdlets, you can skip the confirmation prompt by using this exact syntax: `-Confirm:$false`.</maml:para>
+          <maml:para>- Most other cmdlets (for example, New-\ and Set-\ cmdlets) don't have a built-in pause. For these cmdlets, specifying the Confirm switch without a value introduces a pause that forces you acknowledge the command before proceeding.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
-          <maml:name>Object</maml:name>
+          <maml:name>SwitchParameter</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>2</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="15" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>EnableAntispoofEnforcement</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of spoof protection.</maml:para>
+          <maml:para>The EnableAntispoofEnforcement parameter specifies whether to enable or disable antispoofing protection for the policy. Valid values are:</maml:para>
+          <maml:para>- $true: Antispoofing is enabled for the policy. This is the default and recommended value. You specify the spoofed senders to allow or block using the Set-PhishFilterPolicy cmdlet.</maml:para>
+          <maml:para>- $false: Antispoofing is disabled for the policy. We only recommend this value if you have a domain that's protected by another email filtering service.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="named" aliases="none">
         <maml:name>Enabled</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill Enabled Description }}</maml:para>
+          <maml:para>The Enabled parameter specifies whether the antiphish policy is enabled or disabled. Valid values are:</maml:para>
+          <maml:para>$true: The policy is enabled.</maml:para>
+          <maml:para>$false: The policy is disabled.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
-          <maml:name>Object</maml:name>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>EnableMailboxIntelligence</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The EnableMailboxIntelligence parameter specifies whether to enable or disable mailbox intelligence (artificial intelligence that determines user email patterns with their frequent contacts). Valid values are::</maml:para>
+          <maml:para>- $true: Mailbox intelligence is enabled. This is the default value.</maml:para>
+          <maml:para>- $false: Mailbox intelligence is disabled.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>EnableMailboxIntelligenceProtection</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The EnableMailboxIntelligenceProtection specifies whether to enable or disable enhanced impersonation results based on each user's individual sender map. This intelligence allows Microsoft 365 to customize user impersonation detection and better handle false positives. Valid values are:</maml:para>
+          <maml:para>- $true: Enable mailbox intelligence based impersonation protection.</maml:para>
+          <maml:para>- $false: Don't enable mailbox intelligence based impersonation protection. This is the default value.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>EnableOrganizationDomainsProtection</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The EnableOrganizationDomainsProtection parameter specifies whether to enable domain impersonation protection for all registered domains in the Microsoft 365 organization. Valid values are:</maml:para>
+          <maml:para>- $true: Domain impersonation protection is enabled for all registered domains in the Microsoft 365 organization.</maml:para>
+          <maml:para>- $false: Domain impersonation protection isn't enabled for all registered domains in the Microsoft 365 organization. This is the default value. You can enable protection for specific domains by using the EnableTargetedDomainsProtection and TargetedDomainsToProtect parameters.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>EnableSimilarDomainsSafetyTips</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The EnableSimilarDomainsSafetyTips parameter specifies whether to enable the safety tip that's shown to recipients for domain impersonation detections. Valid values are:</maml:para>
+          <maml:para>- $true: Safety tips for similar domains are enabled.</maml:para>
+          <maml:para>- $false: Safety tips for similar domains are disabled. This is the default value.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>EnableSimilarUsersSafetyTips</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The EnableSimilarUsersSafetyTips parameter specifies whether to enable the safety tip that's shown to recipients for user impersonation detections. Valid values are:</maml:para>
+          <maml:para>- $true: Safety tips for similar users are enabled.</maml:para>
+          <maml:para>- $false: Safety tips for similar users are disabled. This is the default value.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>EnableTargetedDomainsProtection</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The EnableTargetedDomainsProtection parameter specifies whether to enable domain impersonation protection for a list of specified domains. Valid values are:</maml:para>
+          <maml:para>- $true: Domain impersonation protection is enabled for the domains specified by the TargetedDomainsToProtect parameter.</maml:para>
+          <maml:para>- $false: The TargetedDomainsToProtect parameter isn't used. This is the default value.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>EnableTargetedUserProtection</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The EnableTargetedUserProtection parameter specifies whether to enable user impersonation protection for a list of specified users. Valid values are:</maml:para>
+          <maml:para>- $true: User impersonation protection is enabled for the users specified by the TargetedUsersToProtect parameter.</maml:para>
+          <maml:para>- $false: The TargetedUsersToProtect parameter isn't used. This is the default value.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>EnableUnauthenticatedSender</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of spoof protection.</maml:para>
+          <maml:para>The EnableUnauthenticatedSender parameter enables or disables unauthenticated sender identification in Outlook. Valid values are:</maml:para>
+          <maml:para>- $true: This is the default value. A question mark (?) is applied to the sender's photo if the message does not pass SPF or DKIM checks AND the message does not pass DMARC or composite authentication. The via tag (chris@contoso.com &lt;u&gt;via&lt;/u&gt; michelle@fabrikam.com) is added if the domain in the From address (the message sender that's displayed in email clients) is different from the domain in the DKIM signature or the MAIL FROM address.</maml:para>
+          <maml:para>- $false: A question mark is never applied to the sender's photo. The via tag is still added if the domain in the From address is different from the domain in the DKIM signature or the MAIL FROM address.</maml:para>
+          <maml:para></maml:para>
+          <maml:para>To prevent these identifiers from being added to messages from specific senders, you have the following options:</maml:para>
+          <maml:para>- Allow the sender to spoof in the spoof intelligence policy. This action will prevent the via tag from appearing in messages from the sender when unauthenticated sender identification is disabled. For instructions, see Configure spoof intelligence in Microsoft 365 (https://docs.microsoft.com/microsoft-365/security/office-365-security/learn-about-spoof-intelligence). - If you own the sender's domain, configure email authentication for the domain. For more information, see Configure email authentication for domains you own (https://docs.microsoft.com/microsoft-365/security/office-365-security/email-validation-and-authentication#configure-email-authentication-for-domains-you-own).</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>True</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>EnableUnusualCharactersSafetyTips</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The EnableUnusualCharactersSafetyTips parameter specifies whether to enable the safety tip that's shown to recipients for unusual characters in domain and user impersonation detections. Valid values are:</maml:para>
+          <maml:para>- $true: Safety tips for unusual characters are enabled.</maml:para>
+          <maml:para>- $false: Safety tips for unusual characters are disabled. This is the default value.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ExcludedDomains</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The ExcludedDomains parameter specifies an exception for impersonation protection that looks for the specified domains in the message sender. You can specify multiple domains separated by commas.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+        <dev:type>
+          <maml:name>MultiValuedProperty</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ExcludedSenders</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The ExcludedSenders parameter specifies an exception for impersonation protection that looks for the specified message sender. You can specify multiple email addresses separated by commas.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+        <dev:type>
+          <maml:name>MultiValuedProperty</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ImpersonationProtectionState</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The ImpersonationProtectionState parameter specifies the configuration of impersonation protection. Valid values are:</maml:para>
+          <maml:para>- Automatic: This is the default value in the default policy named Office365 AntiPhish Policy.</maml:para>
+          <maml:para>- Manual: This is the default value in custom policies that you create.</maml:para>
+          <maml:para>- Off</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">ImpersonationProtectionState</command:parameterValue>
+        <dev:type>
+          <maml:name>ImpersonationProtectionState</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>MailboxIntelligenceProtectionAction</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The MailboxIntelligenceProtectionAction parameter specifies what to do with messages that fail mailbox intelligence protection. Valid values are:</maml:para>
+          <maml:para>- NoAction: This is the default value.</maml:para>
+          <maml:para>- BccMessage: Add the recipients specified by the MailboxIntelligenceProtectionActionRecipients parameter to the Bcc field of the message.</maml:para>
+          <maml:para>- Delete: Delete the message during filtering. Use caution when selecting this value, because you can't recover the deleted message.</maml:para>
+          <maml:para>- MoveToJmf: Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder. The message is only moved if the junk email rule is enabled on the mailbox (it's enabled by default). For more information, see Configure junk email settings on Exchange Online mailboxes (https://docs.microsoft.com/microsoft-365/security/office-365-security/configure-junk-email-settings-on-exo-mailboxes). - Quarantine: Move the message to quarantine. Quarantined high confidence phishing messages are only available to admins. As of April 2020, quarantined phishing messages are available to the intended recipients.</maml:para>
+          <maml:para>- Redirect: Redirect the message to the recipients specified by the MailboxIntelligenceProtectionActionRecipients parameter.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">ImpersonationAction</command:parameterValue>
+        <dev:type>
+          <maml:name>ImpersonationAction</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>MailboxIntelligenceProtectionActionRecipients</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The MailboxIntelligenceProtectionActionRecipients parameter specifies the recipients to add to detected messages when the MailboxIntelligenceProtectionAction parameter is set to the value Redirect or BccMessage.</maml:para>
+          <maml:para>A valid value for this parameter is an email address. You can specify multiple email addresses separated by commas.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+        <dev:type>
+          <maml:name>MultiValuedProperty</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>MakeDefault</maml:name>
+        <maml:Description>
+          <maml:para>The MakeDefault switch makes the specified antiphish policy the default antiphish policy. You don't have to specify a value with this switch.</maml:para>
+          <maml:para>The default antiphish policy is applied to everyone (no corresponding antiphish rule), can't be renamed, and has the unmodifiable priority value Lowest (the default policy is always applied last).</maml:para>
+        </maml:Description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>PhishThresholdLevel</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of advanced settings and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The PhishThresholdLevel parameter specifies the tolerance level that's used by machine learning in the handling of phishing messages. Valid values are:</maml:para>
+          <maml:para>- 1: Standard: This is the default value. The severity of the action that's taken on the message depends on the degree of confidence that the message is phishing (low, medium, high, or very high confidence). For example, messages that are identified as phishing with a very high degree of confidence have the most severe actions applied, while messages that are identified as phishing with a low degree of confidence have less severe actions applied.</maml:para>
+          <maml:para>- 2: Aggressive: Messages that are identified as phishing with a high degree of confidence are treated as if they were identified with a very high degree of confidence.</maml:para>
+          <maml:para>- 3: More aggressive: Messages that are identified as phishing with a medium or high degree of confidence are treated as if they were identified with a very high degree of confidence.</maml:para>
+          <maml:para>- 4: Most aggressive: Messages that are identified as phishing with a low, medium, or high degree of confidence are treated as if they were identified with a very high degree of confidence.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>PolicyTag</maml:name>
+        <maml:Description>
+          <maml:para>This parameter is reserved for internal Microsoft use.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>TargetedDomainActionRecipients</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The TargetedDomainActionRecipients parameter specifies the recipients to add to detected domain impersonation messages when the TargetedDomainProtectionAction parameter is set to the value Redirect or BccMessage.</maml:para>
+          <maml:para>A valid value for this parameter is an email address. You can specify multiple email addresses separated by commas.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+        <dev:type>
+          <maml:name>MultiValuedProperty</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>TargetedDomainProtectionAction</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The TargetedDomainProtectionAction parameter specifies the action to take on detected domain impersonation messages. You specify the protected domains in the TargetedDomainsToProtect parameter. Valid values are:</maml:para>
+          <maml:para>- NoAction: This is the default value.</maml:para>
+          <maml:para>- BccMessage: Add the recipients specified by the TargetedDomainActionRecipients parameter to the Bcc field of the message.</maml:para>
+          <maml:para>- Delete: Delete the message during filtering. Use caution when selecting this value, because you can't recover the deleted message.</maml:para>
+          <maml:para>- MoveToJmf: Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder. The message is only moved if the junk email rule is enabled on the mailbox (it's enabled by default). For more information, see Configure junk email settings on Exchange Online mailboxes (https://docs.microsoft.com/microsoft-365/security/office-365-security/configure-junk-email-settings-on-exo-mailboxes). - Quarantine: Move the message to quarantine. Quarantined high confidence phishing messages are only available to admins. As of April 2020, quarantined phishing messages are available to the intended recipients.</maml:para>
+          <maml:para>- Redirect: Redirect the message to the recipients specified by the TargetedDomainActionRecipients parameter.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+        <dev:type>
+          <maml:name>MultiValuedProperty</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>TargetedDomainsToProtect</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The TargetedDomainsToProtect parameter specifies the domains that are included in domain impersonation protection when the EnableTargetedDomainsProtection parameter is set to $true.</maml:para>
+          <maml:para>You can specify multiple domains separated by commas.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+        <dev:type>
+          <maml:name>MultiValuedProperty</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>TargetedUserActionRecipients</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The TargetedUserActionRecipients parameter specifies the replacement or additional recipients for detected user impersonation messages when the TargetedUserProtectionAction parameter is set to the value Redirect or BccMessage.</maml:para>
+          <maml:para>A valid value for this parameter is an email address. You can specify multiple email addresses separated by commas.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+        <dev:type>
+          <maml:name>MultiValuedProperty</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>TargetedUserProtectionAction</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The TargetedUserProtectionAction parameter specifies the action to take on detected user impersonation messages. You specify the protected users in the TargetedUsersToProtect parameter. Valid values are:</maml:para>
+          <maml:para>- NoAction: This is the default value.</maml:para>
+          <maml:para>- BccMessage: Add the recipients specified by the TargetedDomainActionRecipients parameter to the Bcc field of the message.</maml:para>
+          <maml:para>- Delete: Delete the message during filtering. Use caution when selecting this value, because you can't recover the deleted message.</maml:para>
+          <maml:para>- MoveToJmf: Deliver the message to the recipient's mailbox, and move the message to the Junk Email folder. The message is only moved if the junk email rule is enabled on the mailbox (it's enabled by default). For more information, see Configure junk email settings on Exchange Online mailboxes (https://docs.microsoft.com/microsoft-365/security/office-365-security/configure-junk-email-settings-on-exo-mailboxes). - Quarantine: Move the message to quarantine. Quarantined high confidence phishing messages are only available to admins. As of April 2020, quarantined phishing messages are available to the intended recipients.</maml:para>
+          <maml:para>- Redirect: Redirect the message to the recipients specified by the TargetedDomainActionRecipients parameter.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+        <dev:type>
+          <maml:name>MultiValuedProperty</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>TargetedUsersToProtect</maml:name>
+        <maml:Description>
+          <maml:para>This setting is part of impersonation protection and is only available in Microsoft Defender for Office 365.</maml:para>
+          <maml:para>The TargetedUsersToProtect parameter specifies the users that are included in user impersonation protection when the EnableTargetedUserProtection parameter is set to $true.</maml:para>
+          <maml:para>This parameter uses the syntax: "DisplayName;EmailAddress".</maml:para>
+          <maml:para>- DisplayName specifies the display name of the user that could be a target of impersonation. This value can contain special characters.</maml:para>
+          <maml:para>- EmailAddress specifies the internal or external email address that's associated with the display name.</maml:para>
+          <maml:para>- You can specify multiple values by using the syntax: "DisplayName1;EmailAddress1","DisplayName2;EmailAddress2",..."DisplayNameN;EmailAddressN". The combination of DisplayName and EmailAddress needs to be unique for each value.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">MultiValuedProperty</command:parameterValue>
+        <dev:type>
+          <maml:name>MultiValuedProperty</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:Description>
+          <maml:para>The WhatIf switch simulates the actions of the command. You can use this switch to view the changes that would occur without actually applying those changes. You don't need to specify a value with this switch.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -396,6 +948,11 @@
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/AdamNSTA/MSBaseline/blob/dev/docs/Set-DefaultBaseline365ATP.md</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
 </helpItems>
