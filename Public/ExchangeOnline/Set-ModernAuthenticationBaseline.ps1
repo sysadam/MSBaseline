@@ -28,3 +28,4 @@ function Set-ModernAuthenticationBaseline {
         $_
     }
 }
+Export-ModuleMember -Function Set-ModernAuthenticationBaseline
