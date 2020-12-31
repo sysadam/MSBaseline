@@ -13,7 +13,7 @@ function Set-ModernAuthenticationBaseline {
         
     #>
     try {
-        Write-Host -ForegroundColor Yello "Modern Authentication for Exchange Online is stronly recommended."
+        Write-Host -ForegroundColor Yello "Modern Authentication for Exchange Online is strongly recommended."
         $OrgConfig = Get-OrganizationConfig 
             if ($OrgConfig.OAuth2ClientProfileEnabled) {
             Write-Host "Modern Authentication for Exchange Online is already enabled"
@@ -28,4 +28,3 @@ function Set-ModernAuthenticationBaseline {
         $_
     }
 }
-Export-ModuleMember -Function Set-ModernAuthenticationBaseline
