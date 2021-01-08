@@ -1,17 +1,5 @@
-function Set-DefaultBaseline365ATP {
-    <#
-        .SYNOPSIS
-            This script configures a new tenant with Office 365 Advanced Threat Protection Plan 1.
-            In the future you can simply use the protection templates which will be available in the Security & Compliance center.
-            Until then, use this to get a good baseline configuration in place.
-
-            Connect to Exchange Online via PowerShell using MFA:
-            https://docs.microsoft.com/en-us/powershell/exchange/exchange-online/connect-to-exchange-online-powershell/mfa-connect-to-exchange-online-powershell?view=exchange-ps1
-
-        .NOTES
-            Author:   Adam Gell
-            GitHub:   https://github.com/AdamNSTA/Microsoft-Baselines/   
-        
+function Set-AntiPhishBaseline {
+    <#      
         .EXAMPLE
             Set-DefaultBaseline365ATP -ProtectAllUsers $True
             Set-DefaultBaseline365ATP -ProtectAllUsers $False
