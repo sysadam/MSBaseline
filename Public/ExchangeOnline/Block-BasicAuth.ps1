@@ -4,12 +4,12 @@
 ## https://docs.microsoft.com/en-us/powershell/exchange/exchange-online/connect-to-exchange-online-powershell/mfa-connect-to-exchange-online-powershell?view=exchange-ps
 ## WARNING: Script provided as-is. Author is not responsible for its use and application. Use at your own risk.
 
-## Check whether modern authentication is enabled for Exchange Online, and if not, enable it:
-Set-ModernAuthenticationBaseline
-
 ## Create an authentication policy to block basic authentication
 function Block-BasicAuth {
     try {
+        ## Check whether modern authentication is enabled for Exchange Online, and if not, enable it:
+        Set-ModernAuthenticationBaseline
+        
         $PolicyName = "Block Basic Auth"
         $CheckPolicy = Get-AuthenticationPolicy | Where-Object { $_.Name -contains $PolicyName }
         if (!$CheckPolicy) {
