@@ -19,7 +19,7 @@ function Set-AdminAuditLogConfigBaseline {
     try {
         Set-AdminAuditLogConfig -UnifiedAuditLogIngestionEnabled $true
         Get-Mailbox -ResultSize Unlimited | Set-Mailbox -AuditEnabled $true
-        Write-Host -ForegroundColor Yello "Unified Audit Log Search is now enabled with mailbox auditing enabled" 
+        Write-Host -ForegroundColor Yellow "Unified Audit Log Search is now enabled with mailbox auditing enabled" 
     }
     catch {
         Write-Host -ForegroundColor Yellow "Make sure you are connected to Exchange Online"
