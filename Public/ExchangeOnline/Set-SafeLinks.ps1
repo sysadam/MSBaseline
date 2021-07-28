@@ -14,7 +14,8 @@ function Set-Safelinks {
             'DeliverMessageAfterScan' = $true;
             'EnableForInternalSenders' = $true;
             'DoNotTrackUserClicks' = $true;
-            'DoNotAllowClickThrough' =  $true
+            'DoNotAllowClickThrough' =  $true;
+            'EnableOrganizationBranding' = $true;
          }
          
         New-SafeLinksPolicy @SafeLinksPolicyParam 
