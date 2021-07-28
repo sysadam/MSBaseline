@@ -13,7 +13,7 @@ function Set-Safelinks {
             'ScanUrls' = $true;
             'DeliverMessageAfterScan' = $true;
             'EnableForInternalSenders' = $true;
-            'DoNotTrackUserClicks' = $false;
+            'DoNotTrackUserClicks' = $true;
             'DoNotAllowClickThrough' =  $true
          }
          
