@@ -23,7 +23,7 @@ GUID = '3595a97d-a426-47f5-9478-734c6e567f84'
 # Author of this module
 Author = 'Adam Gell'
 
-# Company or vendor of this module
+# Company or vendor of this module+
 CompanyName = 'NextStep Technology Advisors'
 
 # Copyright statement for this module
