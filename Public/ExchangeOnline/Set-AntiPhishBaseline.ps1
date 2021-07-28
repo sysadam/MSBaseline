@@ -51,7 +51,7 @@ function Set-AntiPhishBaseline {
             $Answer = Read-Host "This will add all users to the impersonation policy. If you have more than 350 users this will fail. Type Y or N and press Enter to continue"
             if ($Answer -eq 'y' -or $Answer -eq 'yes') {
                 #query all users
-                $upn = get-msoluser |where {$_.UserType -eq "Member"} | Select-Object DisplayName, UserPrincipalName
+                $upn = get-msoluser | where-object {$_.UserType -eq "Member"} | Select-Object DisplayName, UserPrincipalName
                 #fill object with correct syntax 
                 $TargetedUsersToProtect = foreach ($n in $upn) { $n.DisplayName, $n.UserPrincipalName -join ";" };
                 Write-Host -ForegroundColor green "Added $(($TargetedUsersToProtect).Count) to users to protect section in the policy"
