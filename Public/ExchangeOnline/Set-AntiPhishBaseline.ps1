@@ -48,7 +48,7 @@ function Set-AntiPhishBaseline {
         }
 
         if ([bool]$ProtectAllUsers -eq $True) {
-            $Answer = Read-Host "This will add all users to the impersonation policy. If you have more than 60 users this will fail. Type Y or N and press Enter to continue"
+            $Answer = Read-Host "This will add all users to the impersonation policy. If you have more than 350 users this will fail. Type Y or N and press Enter to continue"
             if ($Answer -eq 'y' -or $Answer -eq 'yes') {
                 #query all users
                 $upn = get-msoluser | Select-Object DisplayName, UserPrincipalName
