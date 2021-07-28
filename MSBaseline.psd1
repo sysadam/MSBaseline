@@ -12,7 +12,7 @@
 RootModule = 'MSBaseline.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.5'
+ModuleVersion = '0.0.6'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -73,7 +73,7 @@ FunctionsToExport = @('Block-BasicAuth', 'Block-IMAP', 'Block-POP',
                'Set-AdminAuditLogConfigBaseline', 'Set-AntiPhishBaseline', 
                'Set-DeletedItemsRetention', 'Set-EOBaseline', 
                'Set-ModernAuthenticationBaseline', 'Set-SafeAttachmentBaseline', 
-               'Set-Safelinks', 'Unblock-BasicAuth')
+               'Set-Safelinks', 'Unblock-BasicAuth', 'Get-DeletedItemsRetention')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()

@@ -1,6 +1,5 @@
-function Set-DeletedItemsRetention {
+function Get-DeletedItemsRetention {
     try {
-        Get-Mailbox -ResultSize Unlimited | Set-Mailbox -RetainDeletedItemsFor 30 -verbose
         Get-Mailbox -ResultSize Unlimited | Select-Object Name, RetainDeletedItemsFor
     }
     catch {
