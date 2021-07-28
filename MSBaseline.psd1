@@ -12,7 +12,7 @@
 RootModule = 'MSBaseline.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.6a'
+ModuleVersion = '0.0.7'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
